@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://dtq6rm61mw07p"]
+
+[ext_resource type="PackedScene" uid="uid://dx3px8w0gofsu" path="res://environment.blend" id="1_oqfxr"]
+[ext_resource type="Texture2D" uid="uid://juxletbljo41" path="res://addons/kenney_prototype_textures/dark/texture_02.png" id="2_hn2pc"]
+[ext_resource type="Texture2D" uid="uid://dwxoiqcijk8vq" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="3_stkec"]
+[ext_resource type="Texture2D" uid="uid://isb4k4kytl6q" path="res://addons/kenney_prototype_textures/orange/texture_07.png" id="4_v8ek8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehu70"]
+albedo_texture = ExtResource("2_hn2pc")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5oo3"]
+albedo_texture = ExtResource("3_stkec")
+uv1_triplanar = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_din8b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_78js8"]
+albedo_texture = ExtResource("4_v8ek8")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_frcf4"]
+
+[node name="environment" instance=ExtResource("1_oqfxr")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ehu70")
+surface_material_override/1 = SubResource("StandardMaterial3D_x5oo3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -33, 6.39858, -26.4389)
+mesh = SubResource("CylinderMesh_din8b")
+surface_material_override/0 = SubResource("StandardMaterial3D_78js8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" index="0"]
+shape = SubResource("CylinderShape3D_frcf4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 30, 6.39858, -26.4389)
+mesh = SubResource("CylinderMesh_din8b")
+surface_material_override/0 = SubResource("StandardMaterial3D_78js8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D" index="0"]
+shape = SubResource("CylinderShape3D_frcf4")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 30, 6.39858, 24.5611)
+mesh = SubResource("CylinderMesh_din8b")
+surface_material_override/0 = SubResource("StandardMaterial3D_78js8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D" index="0"]
+shape = SubResource("CylinderShape3D_frcf4")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." index="4"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -33, 6.39858, 24.5611)
+mesh = SubResource("CylinderMesh_din8b")
+surface_material_override/0 = SubResource("StandardMaterial3D_78js8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D" index="0"]
+shape = SubResource("CylinderShape3D_frcf4")

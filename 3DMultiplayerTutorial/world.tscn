@@ -1,0 +1,143 @@
+[gd_scene load_steps=8 format=3 uid="uid://hf01irqwvvtx"]
+
+[ext_resource type="PackedScene" uid="uid://dtq6rm61mw07p" path="res://environment.tscn" id="1_mmfkr"]
+[ext_resource type="Script" path="res://world.gd" id="1_pu0m6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_galog"]
+sky_top_color = Color(0.819608, 0, 0.372549, 1)
+sky_horizon_color = Color(0.796078, 0.635294, 0.0627451, 1)
+sky_energy_multiplier = 0.96
+sky_cover_modulate = Color(0.470588, 0.407843, 0.231373, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+sun_curve = 0.0174943
+
+[sub_resource type="Sky" id="Sky_gtwcd"]
+sky_material = SubResource("ProceduralSkyMaterial_galog")
+
+[sub_resource type="Environment" id="Environment_ropwc"]
+background_mode = 2
+sky = SubResource("Sky_gtwcd")
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.372549, 0.403922, 0.45098, 1)
+fog_light_energy = 0.82
+fog_sun_scatter = 0.43
+fog_density = 0.001
+fog_sky_affect = 0.241
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtj7a"]
+bg_color = Color(0.741176, 0, 0.12549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_070mu"]
+bg_color = Color(0, 0.72549, 0.141176, 1)
+
+[node name="World" type="Node"]
+script = ExtResource("1_pu0m6")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ropwc")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.997185, 0.0363504, -0.0655779, 0, 0.87462, 0.48481, 0.0749788, -0.483445, 0.872158, 0, 45, 0)
+light_color = Color(1, 0.878431, 0.8, 1)
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 4.093
+shadow_opacity = 0.48
+shadow_blur = 3.093
+
+[node name="environment" parent="." instance=ExtResource("1_mmfkr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenu" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 328.0
+offset_top = 227.0
+offset_right = -328.0
+offset_bottom = -227.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="addressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter address to join here"
+alignment = 1
+
+[node name="HUD" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 552.0
+offset_top = 300.0
+offset_right = 560.0
+offset_bottom = 308.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+color = Color(0, 1, 0.0509804, 0.796078)
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 256.0
+offset_right = 856.0
+offset_bottom = 27.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_rtj7a")
+theme_override_styles/fill = SubResource("StyleBoxFlat_070mu")
+max_value = 3.0
+value = 3.0
+show_percentage = false
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn")
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
